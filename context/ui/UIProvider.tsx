@@ -15,11 +15,21 @@ interface Props {
 // El provider es el que va a tener el estado y se colocara en la parte mas alta de nuestra aplicacion
 export const UIProvider:FC<Props> = ({children}) => {
 
-  const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)
+  const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
+
+  const openSideMenu = () => {
+    dispatch({type: 'UI - Open sidebar'});
+  }
+  
+  const closeSideMenu = () => {
+    dispatch({type: 'UI - Close sidebar'})
+  }
 
   return (
     <UIContext.Provider value={{
-      sidemenuOpen: false
+      ...state,
+      openSideMenu,
+      closeSideMenu
     }}>
       {children}
     </UIContext.Provider>
