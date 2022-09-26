@@ -3,10 +3,12 @@ import { UIContext, uiReducer } from './';
 
 export interface UIState {
   sidemenuOpen: boolean;
+  isAddingEntry: boolean;
 }
 
 const UI_INITIAL_STATE: UIState = {
   sidemenuOpen: false,
+  isAddingEntry: false,
 }
 
 interface Props {
@@ -25,11 +27,16 @@ export const UIProvider:FC<Props> = ({children}) => {
     dispatch({type: 'UI - Close sidebar'})
   }
 
+  const setIsAddingEntry = (isAdding: boolean) => {
+    dispatch({type: 'UI - Set isAddingEntry', payload: isAdding})
+  }
+
   return (
     <UIContext.Provider value={{
       ...state,
       openSideMenu,
-      closeSideMenu
+      closeSideMenu,
+      setIsAddingEntry
     }}>
       {children}
     </UIContext.Provider>
