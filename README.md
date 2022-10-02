@@ -10,3 +10,7 @@ docker-compose up -d
 ```
 mongodb://localhost:27017
 ```
+
+
+## Configurar las variables de entorno
+Renombrar el archivo __.env.example__ a __.env__

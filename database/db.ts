@@ -9,7 +9,7 @@ import mongoose from 'mongoose';
  * 
 */
 
-
+// TODO: Cambiar paqueteria a mongodb
 const mongooConnection = {
   isConnected: 0
 }
@@ -17,7 +17,7 @@ const mongooConnection = {
 export const connect  = async () => {
 
   if (mongooConnection.isConnected) {
-    console.log('Estamos conectados')
+    console.log('Ya estabamos conectados')
     return;
   }
 
@@ -32,15 +32,15 @@ export const connect  = async () => {
     await mongoose.disconnect();
   }
 
-  await mongoose.connect('....');
+  await mongoose.connect(process.env.MONGO_URL || '');
   mongooConnection.isConnected = 1;
-  console.log('Conecado a MongoDB', '...')
+  console.log('Conecado a MongoDB', process.env.MONGO_URL)
 }
 
 
 export const disconnect = async () => {
   
-  if (mongooConnection.isConnected !== 0) return;
+  if (mongooConnection.isConnected === 0) return;
 
   await mongoose.disconnect();
   console.log('Desconecado de MongoDB')
