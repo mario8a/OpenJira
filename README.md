@@ -14,3 +14,10 @@ mongodb://localhost:27017
 
 ## Configurar las variables de entorno
 Renombrar el archivo __.env.example__ a __.env__
+
+## Llenar la base de datos con informacion de pruebas
+
+llamar:
+```
+http://localhost:3000/api/seed
+```
