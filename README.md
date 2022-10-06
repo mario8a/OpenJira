@@ -15,6 +15,12 @@ mongodb://localhost:27017
 ## Configurar las variables de entorno
 Renombrar el archivo __.env.example__ a __.env__
 
+# Reconstruir los modulos de node
+```
+yarn install
+yarn dev
+```
+
 ## Llenar la base de datos con informacion de pruebas
 
 llamar:
