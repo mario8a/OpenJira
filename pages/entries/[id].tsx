@@ -4,22 +4,20 @@ import { capitalize ,Card, Grid, CardHeader, CardContent, TextField, CardActions
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Layout } from '../../components/Layouts';
-import { EntryStatus } from '../../interfaces';
-import { isValidObjectId } from 'mongoose';
+import { Entry, EntryStatus } from '../../interfaces';
+import { dbEntries } from '../../database';
 
 
 const validStatus:EntryStatus[] = ['pending', 'in-progress', 'finished'];
 
 interface Props {
-
+  entry: Entry
 }
 
-const EntryPage:FC = (props) => {
+const EntryPage:FC<Props> = ({entry}) => {
 
-  console.log({props})
-
-  const [inputValue, setInputValue] = useState('');
-  const [status, setStatus] = useState<EntryStatus>('pending');
+  const [inputValue, setInputValue] = useState(entry.description);
+  const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
   const isNotValid = useMemo(() => inputValue.length <=0 && touched ,[inputValue, touched]);
@@ -38,7 +36,7 @@ const EntryPage:FC = (props) => {
   }
 
   return (
-    <Layout>
+    <Layout title={inputValue.substring(0,20) + '...'}>
       <Grid
         container
         justifyContent='center'
@@ -46,7 +44,7 @@ const EntryPage:FC = (props) => {
       >
         <Grid item xs={12} sm={8} md={6} >
           <Card>
-            <CardHeader title={`Entrada: ${inputValue}`} subheader={`Creada hace: .... min`} />
+            <CardHeader title={`${inputValue}`} subheader={`Creada hace: ${entry.createdAt} min`} />
 
             <CardContent>
               <TextField
@@ -124,8 +122,10 @@ const EntryPage:FC = (props) => {
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
 
   const {id} = params as {id: string};
+  
+  const entry = await dbEntries.getEntryById(id);
 
-  if( !isValidObjectId(id) ) {
+  if( !entry ) {
     return {
       redirect: {
         destination: '/',
@@ -138,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async ({params}) => {
   return {
     // Estas props son enviadas al componente
     props: {
-      id
+      entry
     }
   }
 }
