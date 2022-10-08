@@ -4,7 +4,7 @@ import { Entry } from '../../interfaces';
 interface ContexrProps {
   entries: Entry[];
   addNewEntry: (description: string) => void;
-  updateEntry: (entry: Entry) => void
+  updateEntry: (entry: Entry, showSnackbar?: boolean) => void
 }
 
 export const EntriesContext = createContext({} as ContexrProps);
