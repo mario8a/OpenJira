@@ -18,7 +18,7 @@ export const EntryList:FC<Props> = ({status}) => {
   // Usamos usememo para momorizar y evitar que react vuelva  a generar el filtro 
   // puede que tengamos muchas entradas y se vuelva un proceso pesado
   // useMemo es una funcion que se memoriza y lo hace cuando cambien las entradas
-  const entriesByStatus = useMemo(() => entries.filter(entry => entry.status === status) , [entries]);
+  const entriesByStatus = useMemo(() => entries.filter(entry => entry.status === status) , [entries, status]);
 
   const onDropEntry = (e: React.DragEvent<HTMLDivElement>) => {
     const id = e.dataTransfer.getData('text');
