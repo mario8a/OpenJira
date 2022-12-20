@@ -44,7 +44,7 @@ const EntryPage:FC<Props> = ({entry}) => {
     }
 
     updateEntry(updatedEntry, true);
-  }
+  };
 
   return (
     <Layout title={inputValue.substring(0,20) + '...'}>
